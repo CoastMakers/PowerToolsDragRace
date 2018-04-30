@@ -3,7 +3,18 @@ const socket = openSocket('http://localhost:8000');
 
 function testSocket(callback) {
   // when receiving a 'test' event from the socket, run the callback on the data received
-  socket.on('test', random => callback(random));
+  // socket.on('test', random => callback(random));
+
+  // add some more events. first, a finishRace event
+  socket.on('finish', finishTime => callback(finishTime));
+
+  // not sure if we will do the processing on the server, or on the client.
+  // these events may not be necessary
+  // add a win event
+  socket.on('win', winTime => callback(winTime));
+  // and a loss event
+  socket.on('loss', lossTime => callback(lossTime));
+
   // when the function is called, send a 'start' event back to the server
   socket.emit('start');
 }

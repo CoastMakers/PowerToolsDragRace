@@ -26,15 +26,30 @@ io.on('connection', client => {
   console.log('id', clientId);
   // let the client start the test by sending a 'start' event
   client.on('start', () => {
-    startTest();
+    // this is the original test function
+    // startTest();
+    // here is the race function
+    startTestRace(7135, 3500);
   });
 });
 
 // listen for data coming from the mock serial port and send it to the React display
 serialPort.on('data', data => {
   console.log('Received:\t', data.toString());
+  if (data.toString() === 'READY') {
+    finishedCount--;
+  }
   // send to all connections
-  io.sockets.emit('test', data.toString());
+  // io.sockets.emit('test', data.toString());
+  // finishedCount++;
+  // const raceData = ;
+
+  // io.sockets.emit('finish', data.toString());
+  io.sockets.emit('finish', `${data.toString()} - ${++finishedCount}`);
+  // console.log(++finishedCount);
+  if (finishedCount > 1) {
+    finishedCount = 0;
+  }
   // send to a specific client
   // io.to(clientId).emit('test', data.toString());
   // note: can add encoding as an arg to .toString
@@ -52,12 +67,43 @@ const sendRandomNumbers = () => {
   }, 100);
 };
 
+// hack with global for sending simulated lane data
+let lane = 1;
+
+// to keep track of what place they arrive in
+let finishedCount = 0;
+
+// writes mock race data to the test port, which is received upon echo
+const sendTestRaceData = finishTime => {
+  console.log(`Sending to mock port: ${finishTime}`);
+  const message = Buffer.from(`${++lane} - ${finishTime}`);
+  serialPort.write(message, () => console.log('Data sent.'));
+
+  // don't let more than two lanes of data come through
+  if (lane > 1) {
+    lane = 0;
+  }
+};
+
 // wait 500ms for the port to open and then start the test
 const startTest = () => {
   setTimeout(() => {
     console.log('Sending test data in 3s...');
     setTimeout(sendRandomNumbers, 3000);
   }, 500);
+};
+
+// simulate a race by sending (and then echoing back) race time data
+const startTestRace = (winTime, timeBack) => {
+  console.log('Race has started');
+  setTimeout(() => {
+    console.log('Sending win time.');
+    sendTestRaceData(winTime);
+    setTimeout(() => {
+      console.log('Sending lose time.');
+      sendTestRaceData(winTime + timeBack);
+    }, timeBack);
+  }, winTime);
 };
 
 // destroys the serial port; not sure if this is required
