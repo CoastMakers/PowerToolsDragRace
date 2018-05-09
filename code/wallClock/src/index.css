@@ -14,7 +14,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #4e4e4e;
+  /* background-color: #4e4e4e; */
+  background-color: black;
   /* box-sizing: border-box; */
 }
 
@@ -108,23 +109,28 @@ body {
 .display-container {
   width: 100%;
   /* height: 80%; */
-  height: 60vh;
+  height: 80vh;
   /* margin: auto; */
   display: flex;
   flex-direction: row;
+  color: #fff;
 }
 
 .lanes {
   width: 50%;
-  border: 5px solid black;
+  /* border: 5px solid black; */
+  border: 5px solid #fff;
   border-bottom: none;
 }
 
-.lane {
-  border-bottom: 5px solid black;
+.lane-container {
+  /* border-bottom: 5px solid black; */
+  border-bottom: 5px solid #fff;
+
   /* box-sizing: content-box; */
   height: 50%;
   width: 100%;
+  padding: 2em;
 }
 
 .winner,
@@ -133,21 +139,59 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* flex-direction: column; */
+  justify-content: space-around;
   align-items: center;
+  /* border-radius: 7em; */
 }
 
 .winner {
-  background-color: limegreen;
+  /* background-color: limegreen; */
+  /* background-color: #fff; */
+  background-color: #000;
+  border: 25px solid limegreen;
 }
 
 .loser {
-  background-color: #777;
+  /* background-color: #777; */
+  background-color: #000;
+  border: 25px solid #777;
+}
+
+.winner-text,
+.loser-text {
+  font-style: italic;
+  text-align: right;
+  /* right: 6em; */
+  /* background-color: limegreen; */
+  transform: translate(-5%, -100%);
+  /* background-color: #fff; */
+  background-color: #000;
+  background-color: transparent;
+  padding: 5px 10px;
+  border-radius: 2em;
+}
+
+.winner-text {
+  color: limegreen;
+}
+
+.loser-text {
+  color: #777;
+}
+
+.race-data {
+  background-color: transparent;
+  /* color: #000; */
+  color: #fff;
+  /* font-size: 150px; */
+  font-size: 100px;
+  position: relative;
 }
 
 .timer {
   border: 5px solid black;
+  border: 5px solid #fff;
   height: 100%;
   width: 50%;
   display: flex;
@@ -156,5 +200,5 @@ body {
 }
 
 .timer .text {
-  font-size: 150px;
+  font-size: 250px;
 }
