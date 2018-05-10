@@ -43,7 +43,11 @@ class Lane extends Component {
     } else {
       return (
         <div className={className}>
-          <p>race in progress</p>
+          <h1 className={`${this.props.bounce} race-data`}>
+            <span role="img" aria-label="racecar">
+              🏎️
+            </span>
+          </h1>
         </div>
       );
     }

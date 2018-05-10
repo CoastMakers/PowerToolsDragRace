@@ -189,6 +189,26 @@ body {
   position: relative;
 }
 
+.bounce-1 {
+  animation: bounce 1000ms linear infinite running;
+}
+
+.bounce-2 {
+  animation: bounce 950ms linear infinite running;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .timer {
   border: 5px solid black;
   border: 5px solid #fff;

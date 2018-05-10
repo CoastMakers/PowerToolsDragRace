@@ -9,13 +9,13 @@ const Lanes = ({ raceData, lanesFinished, winner }) => {
         lane="1"
         raceData={raceData}
         lanesFinished={lanesFinished}
-        winner={winner}
+        bounce="bounce-1"
       />
       <Lane
         lane="2"
         raceData={raceData}
         lanesFinished={lanesFinished}
-        // winner={winner}
+        bounce="bounce-2"
       />
     </div>
   );
