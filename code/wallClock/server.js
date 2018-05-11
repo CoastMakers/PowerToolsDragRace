@@ -54,6 +54,9 @@ serialPort.on('data', data => {
   // parse start signal
   if (dataString === 'START' || dataString === 'STOP') {
     message = dataString;
+  } else if (dataString === 'SETUP') {
+    message = dataString;
+    finishedCount = 0;
   } else {
     message = `${dataString} - ${++finishedCount}`;
   }
@@ -66,9 +69,9 @@ serialPort.on('data', data => {
   // send to all connections
   io.sockets.emit('message', message);
 
-  if (finishedCount > 1) {
-    finishedCount = 0;
-  }
+  // if (finishedCount > 1) {
+  //   finishedCount = 0;
+  // }
 
   // send to a specific client
   // io.to(clientId).emit('test', data.toString());

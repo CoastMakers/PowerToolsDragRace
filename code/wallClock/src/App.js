@@ -23,6 +23,13 @@ class App extends Component {
       // setup the reset runction here
       if (raceData === 'SETUP') {
         console.log('setup');
+        this.setState({
+          lanesFinished: 0,
+          elapsedTime: 0,
+          raceTimer: 0,
+          raceData: '🏎️'
+        });
+        console.log('state', this.state);
       }
 
       // check for start/stop signal
