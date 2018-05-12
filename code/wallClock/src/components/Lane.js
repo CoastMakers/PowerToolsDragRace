@@ -8,9 +8,6 @@ class Lane extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { raceData, lane } = nextProps;
     const finishingLane = raceData.slice(0, 1);
-    // if (raceData === '🏎️') {
-    //   return true;
-    // }
     if (raceData !== this.state.raceData) {
       if (
         lane === finishingLane ||

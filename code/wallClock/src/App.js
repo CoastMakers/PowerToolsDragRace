@@ -54,40 +54,6 @@ class App extends Component {
     });
   }
 
-  // onClick = () => {
-  //   // disable the start button
-  //   if (this.state.startDisabled) {
-  //     return;
-  //   }
-  //
-  //   // start the race
-  //   this.setState({
-  //     startDisabled: true,
-  //     raceData: 'race underway',
-  //     lanesFinished: 0,
-  //     winner: false
-  //   });
-  //
-  //   // start the clock
-  //   testSocket(raceData => {
-  //     // this.setState({ raceData, lanesFinished: this.state.lanesFinished + 1 });
-  //     const finishedCount = raceData.split('- ')[2];
-  //
-  //     this.setState({ raceData, lanesFinished: finishedCount });
-  //
-  //     // stop the clock if both lanes have come in
-  //     if (finishedCount > 1) {
-  //       clearInterval(raceTimer);
-  //       this.setState({ startDisabled: false });
-  //     }
-  //   });
-  //
-  //   let time = 0;
-  //   const raceTimer = setInterval(() => {
-  //     this.setState({ elapsedTime: ++time });
-  //   }, 100);
-  // };
-
   render() {
     const { raceData, lanesFinished } = this.state;
     return (

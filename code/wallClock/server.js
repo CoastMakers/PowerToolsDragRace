@@ -1,6 +1,18 @@
 'use strict';
-// test lib for now, must change to actual lib
+
+// handle command line arguments
+// console.log(process.argv);
+// console.log('LENGTH', process.argv.length);
+if (process.argv.length !== 3) {
+  console.log(`Usage: node server <serialport>`);
+  process.exit(1);
+}
+const port = process.argv[2];
+
+// test library
 // const SerialPort = require('serialport/test');
+
+// connect to serial port and socket
 const SerialPort = require('serialport');
 const io = require('socket.io')();
 
@@ -8,8 +20,8 @@ const io = require('socket.io')();
 // const portPath = 'COM_TEST';
 // const MockBinding = SerialPort.Binding;
 
-// actual port
-const portPath = 'COM3';
+// grab port from command line arguments and set the binding
+const portPath = port;
 const binding = SerialPort.Binding;
 
 // creates the mock binding, set behaviour to emulate an Arduino echo device
@@ -40,6 +52,9 @@ io.on('connection', client => {
   // startTestRace(7135, 3500);
   // });
 });
+
+// to keep track of what place they arrive in
+let finishedCount = 0;
 
 // listen for data coming from the mock serial port and send it to the React display
 serialPort.on('data', data => {
@@ -91,10 +106,7 @@ serialPort.on('data', data => {
 // };
 
 // hack with global for sending simulated lane data
-let lane = 1;
-
-// to keep track of what place they arrive in
-let finishedCount = 0;
+// let lane = 1;
 
 // writes mock race data to the test port, which is received upon echo
 // const sendTestRaceData = finishTime => {
