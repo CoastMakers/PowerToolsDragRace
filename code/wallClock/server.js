@@ -1,13 +1,27 @@
+#!/usr/bin/env node
+
 'use strict';
 
 // handle command line arguments
 // console.log(process.argv);
 // console.log('LENGTH', process.argv.length);
-if (process.argv.length !== 3) {
-  console.log(`Usage: node server <serialport>`);
+// if (process.argv.length !== 3) {
+//   console.log(`Usage: node server <serialport>`);
+//   process.exit(1);
+// }
+// const port = process.argv[2];
+
+// parse options section
+if (process.argv.length !== 4) {
+  console.log('Usage: ./server.js -p <serialport>');
+  // console.log('args:', process.argv.length);
   process.exit(1);
 }
-const port = process.argv[2];
+
+const optionDefinitions = [{ name: 'port', alias: 'p', type: String }];
+
+const commandLineArgs = require('command-line-args');
+const options = commandLineArgs(optionDefinitions);
 
 // test library
 // const SerialPort = require('serialport/test');
@@ -21,7 +35,9 @@ const io = require('socket.io')();
 // const MockBinding = SerialPort.Binding;
 
 // grab port from command line arguments and set the binding
-const portPath = port;
+// const portPath = 'COM3';
+const portPath = options.port;
+// const portPath = port;
 const binding = SerialPort.Binding;
 
 // creates the mock binding, set behaviour to emulate an Arduino echo device
