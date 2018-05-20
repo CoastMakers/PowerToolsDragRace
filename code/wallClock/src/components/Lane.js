@@ -33,7 +33,9 @@ class Lane extends Component {
       return (
         <div className={className}>
           <h1 className="winner-text">WINNER!</h1>
-          <h1 className="race-data">{raceData.substr(4, 5)}</h1>
+          <h1 className="race-data">
+            {raceData.substr(4, 5).replace(/^0*/, '')}
+          </h1>
         </div>
       );
     } else if (lanesFinished === '2') {
@@ -41,7 +43,19 @@ class Lane extends Component {
       return (
         <div className={className}>
           <h1 className="loser-text">RUNNER-UP</h1>
-          <h1 className="race-data">{raceData.substr(4, 5)}</h1>
+          <h1 className="race-data">
+            {raceData.substr(4, 5).replace(/^0*/, '')}
+          </h1>
+        </div>
+      );
+    } else if (lanesFinished === 'T') {
+      className = 'tie';
+      return (
+        <div className={className}>
+          <h1 className="tie-text">TIE!</h1>
+          <h1 className="race-data">
+            {raceData.substr(4, 5).replace(/^0*/, '')}
+          </h1>
         </div>
       );
     } else {

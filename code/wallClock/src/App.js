@@ -48,7 +48,7 @@ class App extends Component {
       this.setState({ raceData, lanesFinished: finishedCount });
 
       // stop the clock if both lanes have come in
-      if (finishedCount > 1) {
+      if (finishedCount > 1 || this.state.lanesFinished === 'T') {
         clearInterval(this.state.raceTimer);
       }
     });

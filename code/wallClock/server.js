@@ -74,39 +74,53 @@ let finishedCount = 0;
 
 // listen for data coming from the mock serial port and send it to the React display
 serialPort.on('data', data => {
-  const dataString = data.toString().trim();
-  let message;
-  console.log('Received:\t', dataString);
-
-  if (dataString === 'READY') {
-    finishedCount--;
+  // const dataString = data.toString().trim();
+  let tie = false;
+  const dataStrings = data
+    .toString()
+    .split('\n')
+    .filter(item => item !== '')
+    .map(item => item.trim());
+  if (dataStrings.length > 1) {
+    tie = true;
   }
 
-  // parse start signal
-  if (dataString === 'START' || dataString === 'STOP') {
-    message = dataString;
-  } else if (dataString === 'SETUP') {
-    message = dataString;
-    finishedCount = 0;
-  } else {
-    message = `${dataString} - ${++finishedCount}`;
-  }
+  dataStrings.forEach(dataString => {
+    let message;
+    console.log('Received:\t', dataString);
 
-  console.log(message);
+    if (dataString === 'READY') {
+      finishedCount--;
+    }
 
-  // io.sockets.emit('finish', `${data.toString()} - ${++finishedCount}`);
-  // console.log(++finishedCount);
+    // parse start signal
+    if (dataString === 'START' || dataString === 'STOP') {
+      message = dataString;
+    } else if (dataString === 'SETUP') {
+      message = dataString;
+      finishedCount = 0;
+    } else if (tie === true) {
+      message = `${dataString} - T`;
+    } else {
+      message = `${dataString} - ${++finishedCount}`;
+    }
 
-  // send to all connections
-  io.sockets.emit('message', message);
+    console.log('Emitting:\t', message);
 
-  // if (finishedCount > 1) {
-  //   finishedCount = 0;
-  // }
+    // io.sockets.emit('finish', `${data.toString()} - ${++finishedCount}`);
+    // console.log(++finishedCount);
 
-  // send to a specific client
-  // io.to(clientId).emit('test', data.toString());
-  // note: can add encoding as an arg to .toString
+    // send to all connections
+    io.sockets.emit('message', message);
+
+    // if (finishedCount > 1) {
+    //   finishedCount = 0;
+    // }
+
+    // send to a specific client
+    // io.to(clientId).emit('test', data.toString());
+    // note: can add encoding as an arg to .toString
+  });
 });
 
 // writes data to the mock port; the port echoes data back and can be received by the server
